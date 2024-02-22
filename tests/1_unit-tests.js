@@ -82,30 +82,30 @@ suite('Unit Tests', function () {
             assert.equal("gallons", convertHandler.spellOutUnit("gal"));
         });
         test('Unit spell mi', function () {
-            assert.equal("kilometers", convertHandler.spellOutUnit("mi"));
+            assert.equal("kilometers", convertHandler.spellOutUnit("km"));
         });
         test('Unit spell km', function () {
-            assert.equal("miles", convertHandler.spellOutUnit("km"));
+            assert.equal("miles", convertHandler.spellOutUnit("mi"));
         });
     });
     suite('TRANSFORM', function () {
         test('Unit transform kg', function () {
-            assert.equal(2 / 0.453592, convertHandler.convert(2, "kg"));
+            assert.equal((2 / 0.453592).toFixed(5), convertHandler.convert(2, "kg"));
         });
         test('Unit transform lbs', function () {
-            assert.equal(0.453592 * 2, convertHandler.convert(2, "lbs"));
+            assert.equal((0.453592 * 2).toFixed(5), convertHandler.convert(2, "lbs"));
         });
         test('Unit transform L', function () {
-            assert.equal(2 / 3.78541, convertHandler.convert(2, "L"));
+            assert.equal((2 / 3.78541).toFixed(5), convertHandler.convert(2, "L"));
         });
         test('Unit transform gal', function () {
-            assert.equal(3.78541 * 2, convertHandler.convert(2, "gal"));
+            assert.equal((3.78541 * 2).toFixed(5), convertHandler.convert(2, "gal"));
         });
         test('Unit transform mi', function () {
-            assert.equal(1.60934 * 2, convertHandler.convert(2, "mi"));
+            assert.equal((1.60934 * 2).toFixed(5), convertHandler.convert(2, "mi"));
         });
         test('Unit transform km', function () {
-            assert.equal(2 / 1.60934, convertHandler.convert(2, "km"));
+            assert.equal((2 / 1.60934).toFixed(5), convertHandler.convert(2, "km"));
         });
     });
 });

@@ -8,14 +8,42 @@ module.exports = function (app) {
   let convertHandler = new ConvertHandler();
   app.get("/api/convert", function (req, res) {
     let input = req.query.input;
+    let num;
+    let unit;
     try {
-      let num = convertHandler.getNum(input)
-      let unit = convertHandler.getUnit(input)
-      let value = convertHandler.convert(num, unit)
-      let valueUnit = convertHandler.getReturnUnit(unit)
-      return res.status(200).send(convertHandler.getString(num, unit, value, valueUnit))
+      num = convertHandler.getNum(input)
     } catch (error) {
-      return res.status(400).send(error)
+      num = false
     }
+    try {
+      unit = convertHandler.getUnit(input)
+    } catch (error) {
+      unit = false
+    }
+    if (!unit & !num) {
+      return res.json('invalid number and unit')
+    }
+    if (!unit) {
+      return res.json('invalid unit')
+    }
+    if (!num) {
+      return res.json('invalid number')
+    }
+    let value = convertHandler.convert(num, unit)
+    let valueUnit = convertHandler.getReturnUnit(unit)
+    return res.status(200).send(
+      {
+        initNum: num,
+        initUnit: unit,
+        returnNum: value,
+        returnUnit: valueUnit,
+        string: convertHandler.getString(
+          num, 
+          convertHandler.spellOutUnit(unit), 
+          value, 
+          convertHandler.spellOutUnit(valueUnit)
+        )
+      }
+    )
   })
 };

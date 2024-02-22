@@ -13,7 +13,7 @@ suite('Functional Tests', function () {
             .get('/api/convert?input=10L')
             .end(function (err, res) {
                 assert.equal(res.status, 200);
-                assert.equal(res.text, `10 L converts to ${10 / 3.78541} gal`);
+                assert.equal(res.body['string'], `10 liters converts to ${(10 / 3.78541).toFixed(5)} gallons`);
                 done();
             });
     });
@@ -24,7 +24,7 @@ suite('Functional Tests', function () {
             .keepOpen()
             .get('/api/convert?input=32g')
             .end(function (err, res) {
-                assert.equal(res.status, 400);
+                assert.equal(res.text, '"invalid unit"');
                 done();
             });
     });
@@ -34,7 +34,7 @@ suite('Functional Tests', function () {
             .keepOpen()
             .get('/api/convert?input=3/7.2/4kg')
             .end(function (err, res) {
-                assert.equal(res.status, 400);
+                assert.equal(res.text, '"invalid number"');
                 done();
             });
     });
@@ -44,7 +44,7 @@ suite('Functional Tests', function () {
             .keepOpen()
             .get('/api/convert?32g')
             .end(function (err, res) {
-                assert.equal(res.status, 400);
+                assert.equal(res.text, '"invalid number and unit"');
                 done();
             });
     });
@@ -55,7 +55,7 @@ suite('Functional Tests', function () {
             .get('/api/convert?input=kg')
             .end(function (err, res) {
                 assert.equal(res.status, 200);
-                assert.equal(res.text, `1 kg converts to ${1 / 0.453592} lbs`);
+                assert.equal(res.body['returnNum'], (1 / 0.453592).toFixed(5));
                 done();
             });
     });
